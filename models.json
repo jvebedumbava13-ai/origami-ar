@@ -4,239 +4,226 @@
     "difficulty": "Level 1: Easy",
     "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line again.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down so its top edge lines up with the bottom of the plane.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "02": {
-    "title": "02. Baby Raptor Jaw",
+    "title": "02. Valkyrie Arrow Jet",
     "difficulty": "Level 1: Easy",
-    "steps": 5,
+    "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the slanted edges to the center line one more time for a needle nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "03": {
-    "title": "03. Cyber Shuriken Disc",
+    "title": "03. Orbital Space Shuttle",
     "difficulty": "Level 1: Easy",
-    "steps": 5,
+    "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down to make a blunt nose.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "04": {
-    "title": "04. Armored Hover-Tank",
+    "title": "04. Neon Panther Mask",
     "difficulty": "Level 1: Easy",
     "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner.",
+      "Fold the side corners up to make pointy ears.",
+      "Fold the bottom point up a little for the chin.",
+      "Turn it over. Your panther mask is ready!"
     ]
   },
   "05": {
-    "title": "05. Plasma Boomerang",
+    "title": "05. Baby Dragon Head",
     "difficulty": "Level 1: Easy",
-    "steps": 4,
+    "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner.",
+      "Fold the side corners up and out to make horns.",
+      "Fold the bottom point up for the snout.",
+      "Turn it over and meet your baby dragon!"
     ]
   },
   "06": {
-    "title": "06. Valkyrie Supersonic Jet",
-    "difficulty": "Level 2: Medium",
+    "title": "06. Kitsune Fox Mask",
+    "difficulty": "Level 1: Easy",
     "steps": 4,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner.",
+      "Fold the side corners down to the bottom point.",
+      "Fold the two points up and out to make the fox ears."
     ]
   },
   "07": {
-    "title": "07. Pterodactyl Glider",
+    "title": "07. Bulldog Interceptor",
     "difficulty": "Level 2: Medium",
-    "steps": 4,
+    "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction"
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down to the bottom of the flaps.",
+      "Fold the new top corners to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "08": {
-    "title": "08. Orbital Space Shuttle",
+    "title": "08. Delta Wing Raider",
     "difficulty": "Level 2: Medium",
     "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "09": {
-    "title": "09. B-2 Spirit Stealth Drone",
+    "title": "09. B-2 Flying Wing",
     "difficulty": "Level 2: Medium",
-    "steps": 4,
+    "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction"
+      "Fold the top edge down a little.",
+      "Roll it down again.",
+      "Roll it down one more time to make a heavy leading edge.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "10": {
-    "title": "10. Fire-Wyvern Glider",
+    "title": "10. Caucasian Golden Ram",
     "difficulty": "Level 2: Medium",
-    "steps": 6,
+    "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction",
-      "Step 6: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner.",
+      "Fold the side corners down to make the curled horns.",
+      "Fold the tips of the horns behind to curl them.",
+      "Fold the bottom point up for the nose. The golden ram is ready!"
     ]
   },
   "11": {
-    "title": "11. Mega-Jump Cyber Frog",
-    "difficulty": "Level 3: Action",
+    "title": "11. Dragon's Goblet",
+    "difficulty": "Level 2: Medium",
     "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner.",
+      "Fold the left corner across so its top edge lies flat.",
+      "Fold the right corner across the same way.",
+      "Fold the top flaps down, one to the front and one to the back. Cheers!"
     ]
   },
   "12": {
-    "title": "12. Flapping Phoenix",
-    "difficulty": "Level 3: Action",
+    "title": "12. Sky Manta Glider",
+    "difficulty": "Level 2: Medium",
     "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction",
-      "Step 6: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner.",
+      "Fold the top point down to the bottom edge.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "13": {
-    "title": "13. Snap-Jaw T-Rex",
+    "title": "13. Pterodactyl Glider",
     "difficulty": "Level 3: Action",
-    "steps": 5,
+    "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the top point down to make a blunt beak.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "14": {
-    "title": "14. Spinning Galaxy Top",
+    "title": "14. Hammer-Nose Raptor",
     "difficulty": "Level 3: Action",
     "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Fold the top edge down to the middle of the sheet.",
+      "Fold the new top corners to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "15": {
-    "title": "15. Mecha Claw Talon",
+    "title": "15. Dragon Oracle Fortune Teller",
     "difficulty": "Level 3: Action",
-    "steps": 4,
+    "steps": 5,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction"
+      "Fold all four corners to the center.",
+      "Turn it over.",
+      "Fold all four new corners to the center again.",
+      "Fold it in half.",
+      "Unfold it, push the corners together and slide your fingers into the pockets!"
     ]
   },
   "16": {
-    "title": "16. Armored Triceratops",
-    "difficulty": "Level 4: Boss 3D",
+    "title": "16. Sea Leviathan",
+    "difficulty": "Level 3: Action",
     "steps": 6,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction",
-      "Step 6: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the two lower edges to the center line (kite fold).",
+      "Fold the top point down to make the head.",
+      "Fold the plane in half backward along the center line.",
+      "Fold the tail up.",
+      "Turn the leviathan on its side. It's ready to swim!"
     ]
   },
   "17": {
     "title": "17. Star-Cruiser Dreadnought",
-    "difficulty": "Level 4: Boss 3D",
-    "steps": 5,
+    "difficulty": "Level 4: Boss",
+    "steps": 7,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down so it reaches past the middle.",
+      "Fold the top corners in so they meet at the center line just above the little point.",
+      "Fold the little point up over the corners to lock them.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
     ]
   },
   "18": {
-    "title": "18. Caucasian Golden Ram",
-    "difficulty": "Level 4: Boss 3D",
-    "steps": 6,
+    "title": "18. Dragon Knight Helmet",
+    "difficulty": "Level 4: Boss",
+    "steps": 8,
     "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction",
-      "Step 6: fill in instruction"
-    ]
-  },
-  "19": {
-    "title": "19. Neon Mecha-Godzilla",
-    "difficulty": "Level 4: Boss 3D",
-    "steps": 5,
-    "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction"
-    ]
-  },
-  "20": {
-    "title": "20. Ancient Emperor Dragon",
-    "difficulty": "Level 4: Boss 3D",
-    "steps": 6,
-    "stepHints": [
-      "Step 1: fill in instruction",
-      "Step 2: fill in instruction",
-      "Step 3: fill in instruction",
-      "Step 4: fill in instruction",
-      "Step 5: fill in instruction",
-      "Step 6: fill in instruction"
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner.",
+      "Fold the side corners down to the bottom point.",
+      "Fold the points of those flaps up to the top.",
+      "Fold the points out to the sides to make horns.",
+      "Fold the front bottom point up.",
+      "Fold it up again along the bottom of the horns to make the brim.",
+      "Fold the back bottom point up behind. Your dragon knight helmet is done!"
     ]
   }
 }

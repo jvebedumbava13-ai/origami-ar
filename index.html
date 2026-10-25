@@ -29,7 +29,10 @@
       <span id="model-level" class="badge"></span>
     </header>
 
-    <model-viewer id="viewer" ar ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y" shadow-intensity="1">
+    <!-- explicit camera: every sheet is 20 cm and centered, and the auto-framing counts all fold shapes at once -->
+    <model-viewer id="viewer" loading="eager" ar ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y" shadow-intensity="1"
+      camera-target="0m 0m 0m" camera-orbit="20deg 75deg 0.6m" field-of-view="30deg"
+      min-camera-orbit="auto auto 0.25m" max-camera-orbit="auto auto 1.5m">
       <button slot="ar-button" class="ar-btn">AR</button>
     </model-viewer>
 
@@ -86,6 +89,12 @@
         console.warn('Animation not ready:', err);
       }
     }
+
+    // when a step's clip ends, model-viewer rewinds it; hold the folded result instead
+    viewer.addEventListener('finished', () => {
+      viewer.pause();
+      viewer.currentTime = Math.max(0, viewer.duration - 0.001);
+    });
 
     document.getElementById('prev-btn').addEventListener('click', () => step(-1));
     document.getElementById('next-btn').addEventListener('click', () => step(1));
