@@ -6,19 +6,48 @@
   <title>AR Hologram Arena</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script>
+    // Which hologram to show: ?id=01..18, or the book's diorama pages (?zone=carrier|dragon).
+    const params = new URLSearchParams(window.location.search);
+    const ZONES = { carrier: '01', dragon: '05' };
+    const MODEL_ID = params.get('id') || ZONES[params.get('zone')] || '18';
+
+    // The GLB holds every fold step as a morph target; show the finished model (the last one).
+    AFRAME.registerComponent('finished-shape', {
+      init() {
+        this.el.addEventListener('model-loaded', () => {
+          this.el.getObject3D('mesh').traverse((node) => {
+            if (node.morphTargetInfluences && node.morphTargetInfluences.length) {
+              node.morphTargetInfluences.fill(0);
+              node.morphTargetInfluences[node.morphTargetInfluences.length - 1] = 1;
+            }
+          });
+        });
+      }
+    });
+  </script>
+  <style>
+    .hint { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; font-family: system-ui, sans-serif;
+            color: #fff; text-shadow: 0 1px 3px #000; font-size: 15px; z-index: 10; padding: 0 16px; }
+  </style>
 </head>
 <body style="margin:0; overflow:hidden;">
-  <!-- targets.mind is compiled from cover_arena_target.png (MindAR compiler) -->
-  <a-scene mindar-image="imageTargetSrc: assets/targets/targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-    <a-assets>
-      <a-asset-item id="dragonModel" src="assets/glb/model_20.glb"></a-asset-item>
-    </a-assets>
+  <div class="hint">Point your camera at the AR arena page or the back cover.</div>
 
+  <!-- targets.mind is compiled from kdp_output/cover_arena_target.png (tools/mindar-node/compile.mjs) -->
+  <a-scene mindar-image="imageTargetSrc: assets/targets/targets.mind; uiScanning: yes; uiLoading: yes"
+           vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-gltf-model src="#dragonModel" position="0 0 0.1" scale="0.5 0.5 0.5" rotation="90 0 0" animation-mixer></a-gltf-model>
+      <!-- the target is 1 unit wide and a sheet is 0.2 m, so scale 3 makes the model about 60% of the target;
+           rotate so the model stands up out of the page -->
+      <a-entity id="hologram" finished-shape position="0 0 0.05" scale="3 3 3" rotation="90 0 0"></a-entity>
     </a-entity>
   </a-scene>
+
+  <script>
+    document.getElementById('hologram').setAttribute('gltf-model', `assets/glb/model_${MODEL_ID}.glb`);
+  </script>
 </body>
 </html>
