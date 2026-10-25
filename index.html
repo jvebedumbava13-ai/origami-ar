@@ -239,6 +239,7 @@
       back.searchParams.set('ar', nextStage(stage));
       const title = modelData ? modelData.title : 'AR Origami';
       logAR(`opening Scene Viewer (${stage === 'google' ? 'Google app' : 'ARCore'})`);
+      sceneViewerTry = { stage, at: Date.now() };
       location.href = 'intent://arvr.google.com/scene-viewer/1.0'
         + `?file=${encodeURIComponent(glb)}&mode=${app.mode}&title=${encodeURIComponent(title)}`
         + `#Intent;scheme=https;package=${app.pkg};`
@@ -246,23 +247,43 @@
         + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
     }
 
+    // A Scene Viewer that crashes (as the Google app does on some phones) drops straight back
+    // here without reloading the page; a quick return means it failed, so the next tap moves on.
+    let sceneViewerTry = null;
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible' || !sceneViewerTry) return;
+      const quick = Date.now() - sceneViewerTry.at < 4000;
+      if (quick) {
+        arStage = nextStage(sceneViewerTry.stage);
+        logAR('Scene Viewer closed at once');
+        hint(AR_MESSAGES[arStage] || AR_MESSAGES.none);
+      }
+      sceneViewerTry = null;
+    });
+
     // Messenger / Facebook / Instagram open links in their own WebView, which has no WebXR,
     // and QR scans from those apps are common; AR there means reopening the page in Chrome.
-    const inAppBrowser = /; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+    const inAppBrowser = /; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(ua);
+    // Opera, Samsung Internet, Edge, Yandex, Firefox... lack WebXR AR; Chrome has it
+    const realChrome = /Chrome\/\d/.test(ua) && !/OPR\/|OPT\/|SamsungBrowser|EdgA|YaBrowser|Firefox|Vivaldi|DuckDuckGo|; wv\)/.test(ua);
 
-    function openInChrome() {
+    function openInChrome(message) {
       const url = new URL(location.href);
       url.searchParams.delete('ar');
-      logAR('in-app browser: reopening in Chrome');
-      hint('AR does not run inside Messenger or Facebook. Opening this page in Chrome...');
+      // if Chrome isn't installed, come back here and go on with Scene Viewer
+      const back = new URL(url.href);
+      back.searchParams.set('ar', 'google');
+      logAR('reopening in Chrome');
+      hint(message);
       location.href = `intent://${url.host}${url.pathname}${url.search}`
         + '#Intent;scheme=https;package=com.android.chrome;'
-        + `S.browser_fallback_url=${encodeURIComponent(url.href)};end;`;
+        + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
     }
 
     document.getElementById('ar-btn').addEventListener('click', async () => {
       if (isAndroid && inAppBrowser) {
-        openInChrome();
+        openInChrome('AR does not run inside Messenger or Facebook. Opening this page in Chrome...');
         return;
       }
       if (isAndroid) {
@@ -274,6 +295,11 @@
               + 'Drag with one finger to move it, twist with two fingers to turn it, pinch to resize. '
               + 'Lost it? Leave AR and tap AR again. Easier: use "AR on the book page".');
             arViewer.activateAR();
+            return;
+          }
+          if (!realChrome) {
+            // Chrome has WebXR AR; Scene Viewer (Google app) is the shakier fallback
+            openInChrome('This browser has no AR. Opening this page in Chrome...');
             return;
           }
           arStage = 'google';
