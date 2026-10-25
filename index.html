@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AR Origami 3D Studio</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, -apple-system, sans-serif; background: #0b0f19; color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; line-height: 1.5; }
@@ -18,6 +19,13 @@
     .btn { background: #2563eb; color: #fff; border: none; padding: 12px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
     .btn:disabled { background: #334155; opacity: 0.5; cursor: default; }
     #step-counter { font-weight: 700; min-width: 80px; text-align: center; }
+    .phone-panel { position: fixed; inset: 0; background: rgba(11, 15, 25, 0.92); display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
+    .phone-panel.open { display: flex; }
+    .phone-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 340px; text-align: center; }
+    .phone-card h2 { font-size: 18px; color: #38bdf8; margin-bottom: 8px; }
+    .phone-card p { color: #cbd5e1; font-size: 14px; margin-bottom: 16px; }
+    #phone-qr { background: #fff; padding: 12px; border-radius: 8px; display: inline-block; margin-bottom: 16px; max-width: 100%; }
+    #phone-qr img, #phone-qr canvas { max-width: 100%; height: auto; }
     .footer-link { display: block; text-align: center; padding: 14px; background: #475569; color: #fff; text-decoration: none; font-weight: 600; }
     @media (min-width: 900px) { body { flex-direction: row; } model-viewer { min-height: 100vh; } }
   </style>
@@ -44,11 +52,22 @@
     <div class="controls">
       <button class="btn" id="prev-btn">Back</button>
       <span id="step-counter">1 / 1</span>
+      <button class="btn" id="replay-btn" title="Play this step again">&#x21bb; Replay</button>
       <button class="btn" id="next-btn">Next</button>
     </div>
 
     <a href="vault.html" class="footer-link">Backup Vault</a>
   </main>
+
+  <!-- AR needs a phone camera: on a computer the AR button shows this instead -->
+  <div class="phone-panel" id="phone-panel">
+    <div class="phone-card">
+      <h2>AR works on your phone</h2>
+      <p>Scan this code with your phone's camera to open this model there, then tap AR.</p>
+      <div id="phone-qr"></div>
+      <div><button class="btn" id="phone-close">Close</button></div>
+    </div>
+  </div>
 
   <script>
     const viewer = document.getElementById('viewer');
@@ -56,6 +75,8 @@
     const modelId = params.get('id') || '01';
     let modelData = null;
     let currentStep = 1;
+    // clips are 1 s per step; 0.4 plays each fold over about 2.5 s so a kid can follow it
+    viewer.timeScale = 0.4;
 
     fetch('models.json')
       .then(res => res.json())
@@ -84,7 +105,11 @@
       document.getElementById('step-hint').innerText = modelData.stepHints[currentStep - 1] || '';
       document.getElementById('prev-btn').disabled = currentStep === 1;
       document.getElementById('next-btn').disabled = currentStep === modelData.steps;
-      // animation clip per step: Step_01, Step_02, ... (no clip until the GLB exists)
+      playStep();
+    }
+
+    // animation clip per step: Step_01, Step_02, ... (no clip until the GLB exists)
+    function playStep() {
       try {
         viewer.animationName = `Step_${String(currentStep).padStart(2, '0')}`;
         viewer.currentTime = 0;
@@ -103,6 +128,8 @@
     // AR: Android goes straight to Google Scene Viewer with the finished model (assets/glb/ar/),
     // iPhone uses Quick Look through model-viewer; any failure is shown instead of doing nothing.
     const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);  // iPadOS reports a Mac
     const hint = (text) => { document.getElementById('step-hint').innerText = text; };
 
     // Scene Viewer lives in the Google app; phones without it can still have it inside ARCore.
@@ -131,12 +158,26 @@
           + `#Intent;scheme=https;package=${app.pkg};`
           + 'action=android.intent.action.VIEW;'
           + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
+      } else if (!isIOS) {
+        openPhonePanel();  // a computer: AR needs a phone camera, whatever the browser
       } else if (viewer.canActivateAR) {
         viewer.activateAR();
       } else {
-        hint('AR is not available in this browser. On iPhone open this page in Safari; on Android in Chrome.');
+        hint('AR is not available in this browser. On iPhone open this page in Safari.');
       }
     });
+
+    function openPhonePanel() {
+      const box = document.getElementById('phone-qr');
+      if (!box.hasChildNodes() && window.QRCode) {
+        const url = new URL(location.href);
+        url.searchParams.delete('ar');
+        new QRCode(box, { text: url.href, width: 200, height: 200 });
+      }
+      document.getElementById('phone-panel').classList.add('open');
+    }
+    document.getElementById('phone-close').addEventListener('click',
+      () => document.getElementById('phone-panel').classList.remove('open'));
 
     viewer.addEventListener('ar-status', (e) => {
       if (e.detail.status === 'failed') hint('AR could not start on this device. Try Chrome (Android) or Safari (iPhone).');
@@ -144,6 +185,7 @@
 
     document.getElementById('prev-btn').addEventListener('click', () => step(-1));
     document.getElementById('next-btn').addEventListener('click', () => step(1));
+    document.getElementById('replay-btn').addEventListener('click', () => { if (modelData) playStep(); });
   </script>
 </body>
 </html>
