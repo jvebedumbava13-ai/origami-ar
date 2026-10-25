@@ -29,10 +29,17 @@
   <style>
     .hint { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; font-family: system-ui, sans-serif;
             color: #fff; text-shadow: 0 1px 3px #000; font-size: 15px; z-index: 10; padding: 0 16px; }
+    .back { position: fixed; top: 12px; left: 12px; z-index: 10; background: rgba(15, 23, 42, 0.8); color: #fff;
+            padding: 8px 14px; border-radius: 18px; font-family: system-ui, sans-serif; text-decoration: none; font-weight: 600; }
+    .chrome { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 11; background: #10b981; color: #fff;
+              border: none; padding: 16px 24px; border-radius: 24px; font-size: 17px; font-weight: 700; }
   </style>
 </head>
 <body style="margin:0; overflow:hidden;">
-  <div class="hint">Point your camera at the AR arena page or the back cover.</div>
+  <div class="hint" id="hint">Point your camera at the AR arena page or the back cover.</div>
+  <a class="back" id="back" href="index.html">&larr; Back</a>
+  <!-- Messenger / Facebook in-app browsers often block the camera: offer Chrome -->
+  <button class="chrome" id="chrome-btn" hidden>Open in Chrome for AR</button>
 
   <!-- targets.mind is compiled from kdp_output/cover_arena_target.png (tools/mindar-node/compile.mjs) -->
   <a-scene mindar-image="imageTargetSrc: assets/targets/targets.mind; uiScanning: yes; uiLoading: yes"
@@ -48,6 +55,16 @@
 
   <script>
     document.getElementById('hologram').setAttribute('gltf-model', `assets/glb/model_${MODEL_ID}.glb`);
+    document.getElementById('back').href = `index.html?id=${MODEL_ID}`;
+
+    if (/android/i.test(navigator.userAgent) && /; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(navigator.userAgent)) {
+      const btn = document.getElementById('chrome-btn');
+      btn.hidden = false;
+      btn.onclick = () => {
+        location.href = `intent://${location.host}${location.pathname}${location.search}`
+          + '#Intent;scheme=https;package=com.android.chrome;end;';
+      };
+    }
   </script>
 </body>
 </html>
