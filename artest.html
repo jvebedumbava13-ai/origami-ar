@@ -23,6 +23,7 @@
   <button id="t2">2. Our fox, new file with paper thickness (Scene Viewer)</button>
   <button id="t3">3. Our fox, old flat file (Scene Viewer)</button>
   <button id="t4">4. Our fox in the browser (WebXR)</button>
+  <button id="t5" style="background:#10b981">5. Open this test in Chrome</button>
 
   <model-viewer id="mv" src="assets/glb/ar/model_06.glb" ar ar-modes="webxr" camera-controls>
     <span slot="ar-button" hidden></span>
@@ -33,6 +34,12 @@
     const lines = [];
     const log = (t) => { lines.push(t); info.innerText = lines.join('\n'); };
     log('Browser: ' + navigator.userAgent);
+    log('In-app browser (Messenger/Facebook...): '
+      + (/; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(navigator.userAgent) ? 'YES - use button 5' : 'no'));
+    document.getElementById('t5').onclick = () => {
+      log('Opening in Chrome');
+      location.href = `intent://${location.host}${location.pathname}#Intent;scheme=https;package=com.android.chrome;end;`;
+    };
 
     (async () => {
       let xr = 'no navigator.xr';

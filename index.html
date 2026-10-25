@@ -190,7 +190,25 @@
         + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
     }
 
+    // Messenger / Facebook / Instagram open links in their own WebView, which has no WebXR,
+    // and QR scans from those apps are common; AR there means reopening the page in Chrome.
+    const inAppBrowser = /; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(navigator.userAgent);
+
+    function openInChrome() {
+      const url = new URL(location.href);
+      url.searchParams.delete('ar');
+      logAR('in-app browser: reopening in Chrome');
+      hint('AR does not run inside Messenger or Facebook. Opening this page in Chrome...');
+      location.href = `intent://${url.host}${url.pathname}${url.search}`
+        + '#Intent;scheme=https;package=com.android.chrome;'
+        + `S.browser_fallback_url=${encodeURIComponent(url.href)};end;`;
+    }
+
     document.getElementById('ar-btn').addEventListener('click', async () => {
+      if (isAndroid && inAppBrowser) {
+        openInChrome();
+        return;
+      }
       if (isAndroid) {
         if (arStage === 'webxr') {
           const ok = await webxrSupported();
