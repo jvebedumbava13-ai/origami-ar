@@ -85,8 +85,8 @@
     const modelId = params.get('id') || '01';
     let modelData = null;
     let currentStep = 1;
-    // clips are 1 s per step; 0.4 plays each fold over about 2.5 s so a kid can follow it
-    viewer.timeScale = 0.4;
+    // clips are 1 s per step; 0.25 plays each fold over about 4 s so a kid can follow it
+    viewer.timeScale = 0.25;
 
     fetch('models.json')
       .then(res => res.json())
