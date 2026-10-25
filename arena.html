@@ -14,12 +14,20 @@
 
   </script>
   <style>
-    .ctls { position: fixed; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 6px;
-            flex-wrap: wrap; z-index: 12; padding: 0 8px; }
-    .ctl { width: 46px; height: 46px; border: none; border-radius: 14px; background: rgba(15, 23, 42, 0.85); color: #fff;
+    /* same control pad as the 3D view: arrows turn, middle resets, + and - in the bottom corners resize */
+    .pad { --k: 56px; position: fixed; right: 12px; top: 50%; transform: translateY(-50%); display: grid;
+           grid-template-columns: repeat(3, var(--k)); grid-template-rows: repeat(3, var(--k)); gap: 4px; z-index: 12; }
+    .ctl { width: var(--k); height: var(--k); border: none; border-radius: 14px; background: rgba(15, 23, 42, 0.85); color: #fff;
            font-size: 20px; touch-action: none; user-select: none; -webkit-user-select: none; }
     .ctl:active { background: #2563eb; }
-    .hint { position: fixed; left: 0; right: 0; bottom: 72px; text-align: center; font-family: system-ui, sans-serif;
+    .pad .up { grid-column: 2; grid-row: 1; }
+    .pad .left { grid-column: 1; grid-row: 2; }
+    .pad .mid { grid-column: 2; grid-row: 2; }
+    .pad .right { grid-column: 3; grid-row: 2; }
+    .pad .down { grid-column: 2; grid-row: 3; }
+    .pad .plus { grid-column: 1; grid-row: 3; font-size: 28px; font-weight: 700; }
+    .pad .minus { grid-column: 3; grid-row: 3; font-size: 28px; font-weight: 700; }
+    .hint { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; font-family: system-ui, sans-serif;
             color: #fff; text-shadow: 0 1px 3px #000; font-size: 15px; z-index: 10; padding: 0 16px; }
     .back { position: fixed; top: 12px; left: 12px; z-index: 10; background: rgba(15, 23, 42, 0.8); color: #fff;
             padding: 8px 14px; border-radius: 18px; font-family: system-ui, sans-serif; text-decoration: none; font-weight: 600; }
@@ -30,14 +38,14 @@
 <body style="margin:0; overflow:hidden;">
   <div class="hint" id="hint">Point your camera at the AR arena page or the back cover.</div>
   <!-- model controls: turn left/right, tilt up/down, size, reset -->
-  <div class="ctls">
-    <button class="ctl" data-act="left" aria-label="Turn left">&#8634;</button>
-    <button class="ctl" data-act="right" aria-label="Turn right">&#8635;</button>
-    <button class="ctl" data-act="up" aria-label="Tilt up">&#9650;</button>
-    <button class="ctl" data-act="down" aria-label="Tilt down">&#9660;</button>
-    <button class="ctl" data-act="smaller" aria-label="Smaller">&minus;</button>
-    <button class="ctl" data-act="bigger" aria-label="Bigger">+</button>
-    <button class="ctl" data-act="reset" aria-label="Reset">&#10227;</button>
+  <div class="pad">
+    <button class="ctl up" data-act="up" aria-label="Tilt up">&#9650;</button>
+    <button class="ctl left" data-act="left" aria-label="Turn left">&#9664;</button>
+    <button class="ctl mid" data-act="reset" aria-label="Reset">&#10227;</button>
+    <button class="ctl right" data-act="right" aria-label="Turn right">&#9654;</button>
+    <button class="ctl down" data-act="down" aria-label="Tilt down">&#9660;</button>
+    <button class="ctl plus" data-act="bigger" aria-label="Bigger">+</button>
+    <button class="ctl minus" data-act="smaller" aria-label="Smaller">&minus;</button>
   </div>
   <a class="back" id="back" href="index.html">&larr; Back</a>
   <!-- Messenger / Facebook in-app browsers often block the camera: offer Chrome -->

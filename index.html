@@ -13,9 +13,11 @@
     header h1 { font-size: 18px; color: #38bdf8; }
     .badge { display: inline-block; background: #3b82f6; padding: 2px 10px; border-radius: 12px; font-size: 12px; margin-top: 6px; }
     model-viewer { width: 100%; flex: 1; min-height: 60vh; background: radial-gradient(circle, #1e293b 0%, #0b0f19 100%); }
-    .pad { position: absolute; top: 12px; right: 12px; display: grid; grid-template-columns: repeat(3, 44px);
-           grid-template-rows: repeat(3, 44px); gap: 4px; z-index: 5; }
-    .pad-btn { width: 44px; height: 44px; border: none; border-radius: 12px; background: rgba(30, 41, 59, 0.85);
+    /* one control pad everywhere (3D view, room AR): arrows turn, the middle resets,
+       + and - in the bottom corners resize */
+    .pad { --k: 44px; position: absolute; top: 12px; right: 12px; display: grid; grid-template-columns: repeat(3, var(--k));
+           grid-template-rows: repeat(3, var(--k)); gap: 4px; z-index: 5; }
+    .pad-btn { width: var(--k); height: var(--k); border: none; border-radius: 12px; background: rgba(30, 41, 59, 0.85);
                color: #f8fafc; font-size: 18px; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; }
     .pad-btn:active { background: #2563eb; }
     .pad .up { grid-column: 2; grid-row: 1; }
@@ -23,6 +25,8 @@
     .pad .mid { grid-column: 2; grid-row: 2; font-size: 20px; }
     .pad .right { grid-column: 3; grid-row: 2; }
     .pad .down { grid-column: 2; grid-row: 3; }
+    .pad .plus { grid-column: 1; grid-row: 3; font-size: 26px; font-weight: 700; }
+    .pad .minus { grid-column: 3; grid-row: 3; font-size: 26px; font-weight: 700; }
     .ar-row { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; justify-content: center; gap: 10px; padding: 0 12px; flex-wrap: wrap; }
     .ar-pill { background: #10b981; color: #fff; border: none; padding: 12px 18px; border-radius: 24px; font-weight: 700; font-size: 15px; cursor: pointer; text-decoration: none; }
     .ar-pill.arena { background: #f59e0b; color: #0b0f19; }
@@ -36,13 +40,10 @@
     #ar-viewer[ar-status="session-started"], #ar-viewer[ar-status="object-placed"] {
       opacity: 1 !important; position: fixed !important; left: 0 !important; top: 0 !important;
       width: 100vw !important; height: 100vh !important; pointer-events: auto !important; }
-    /* a column on the right: Chrome's "To exit full screen" notice covers the bottom for the first seconds */
-    .xr-ctls { display: none; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-               flex-direction: column; gap: 8px; }
-    #ar-viewer[ar-status="session-started"] .xr-ctls, #ar-viewer[ar-status="object-placed"] .xr-ctls { display: flex; }
-    .xr-ctl { width: 54px; height: 54px; border: none; border-radius: 16px; background: rgba(15, 23, 42, 0.85); color: #fff;
-              font-size: 22px; touch-action: none; user-select: none; -webkit-user-select: none; }
-    .xr-ctl:active { background: #2563eb; }
+    /* room AR pad: bigger, on the right edge (Chrome's "To exit full screen" notice covers the bottom
+       for the first seconds), shown only during an AR session */
+    .pad.xr { --k: 56px; display: none; top: 50%; transform: translateY(-50%); }
+    #ar-viewer[ar-status="session-started"] .pad.xr, #ar-viewer[ar-status="object-placed"] .pad.xr { display: grid; }
     .phone-panel { position: fixed; inset: 0; background: rgba(11, 15, 25, 0.92); display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
     .phone-panel.open { display: flex; }
     .phone-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 340px; text-align: center; }
@@ -75,6 +76,8 @@
         <button class="pad-btn mid" id="pad-reset" aria-label="Reset view">&#10227;</button>
         <button class="pad-btn right" data-turn="1,0" aria-label="Turn right">&#9654;</button>
         <button class="pad-btn down" data-turn="0,1" aria-label="Turn down">&#9660;</button>
+        <button class="pad-btn plus" data-zoom="-1" aria-label="Zoom in">+</button>
+        <button class="pad-btn minus" data-zoom="1" aria-label="Zoom out">&minus;</button>
       </div>
       <div class="ar-row">
         <button id="ar-btn" class="ar-pill" type="button">AR in your room</button>
@@ -103,14 +106,14 @@
     style="position:absolute; left:-10px; top:0; width:1px; height:1px; opacity:0; pointer-events:none;">
     <span slot="ar-button" hidden></span>
     <!-- shown on top of the camera during WebXR AR (Chrome's DOM overlay): turn and size -->
-    <div class="xr-ctls" id="xr-ctls">
-      <button class="xr-ctl" data-act="left" aria-label="Turn left">&#8634;</button>
-      <button class="xr-ctl" data-act="right" aria-label="Turn right">&#8635;</button>
-      <button class="xr-ctl" data-act="up" aria-label="Tilt up">&#9650;</button>
-      <button class="xr-ctl" data-act="down" aria-label="Tilt down">&#9660;</button>
-      <button class="xr-ctl" data-act="smaller" aria-label="Smaller">&minus;</button>
-      <button class="xr-ctl" data-act="bigger" aria-label="Bigger">+</button>
-      <button class="xr-ctl" data-act="reset" aria-label="Reset">&#10227;</button>
+    <div class="pad xr" id="xr-ctls">
+      <button class="pad-btn up" data-act="up" aria-label="Tilt up">&#9650;</button>
+      <button class="pad-btn left" data-act="left" aria-label="Turn left">&#9664;</button>
+      <button class="pad-btn mid" data-act="reset" aria-label="Reset">&#10227;</button>
+      <button class="pad-btn right" data-act="right" aria-label="Turn right">&#9654;</button>
+      <button class="pad-btn down" data-act="down" aria-label="Tilt down">&#9660;</button>
+      <button class="pad-btn plus" data-act="bigger" aria-label="Bigger">+</button>
+      <button class="pad-btn minus" data-act="smaller" aria-label="Smaller">&minus;</button>
     </div>
   </model-viewer>
 
@@ -373,7 +376,7 @@
     const xrCtls = document.getElementById('xr-ctls');
     // taps on the buttons must not also count as AR taps (placing or moving the model)
     xrCtls.addEventListener('beforexrselect', (e) => e.preventDefault());
-    xrCtls.querySelectorAll('.xr-ctl').forEach((btn) => {
+    xrCtls.querySelectorAll('.pad-btn').forEach((btn) => {
       const act = () => { XR_ACTIONS[btn.dataset.act](); applyArPose(); };
       let timer = null;
       const stop = () => { clearInterval(timer); timer = null; };
@@ -391,7 +394,7 @@
     // turn from the goal, not from the camera's current position: it glides toward the goal,
     // so stepping from where it is made held buttons slow and uneven
     let goal = null;
-    function turn(dx, dy) {
+    function turn(dx, dy, dz = 0) {
       if (!goal) {
         const o = viewer.getCameraOrbit();
         goal = { theta: o.theta, phi: o.phi, radius: o.radius };
@@ -399,20 +402,23 @@
       const step = Math.PI / 12;
       goal.theta += dx * step;
       goal.phi = Math.min(Math.PI - 0.15, Math.max(0.15, goal.phi + dy * step));
+      // + / - move the camera closer or farther, within the viewer's min/max orbit (0.25-1.5 m)
+      goal.radius = Math.min(1.5, Math.max(0.25, goal.radius * Math.pow(1.15, dz)));
       viewer.cameraOrbit = `${goal.theta}rad ${goal.phi}rad ${goal.radius}m`;
     }
     viewer.addEventListener('camera-change', (e) => {
       if (e.detail.source === 'user-interaction') goal = null;  // a finger drag takes over
     });
-    document.querySelectorAll('.pad-btn[data-turn]').forEach((btn) => {
-      const [dx, dy] = btn.dataset.turn.split(',').map(Number);
+    document.querySelectorAll('#pad .pad-btn[data-turn], #pad .pad-btn[data-zoom]').forEach((btn) => {
+      const [dx, dy] = (btn.dataset.turn || '0,0').split(',').map(Number);
+      const dz = Number(btn.dataset.zoom || 0);
       let timer = null;
       const stop = () => { clearInterval(timer); timer = null; };
       btn.addEventListener('pointerdown', (e) => {
         e.preventDefault();
-        turn(dx, dy);
+        turn(dx, dy, dz);
         stop();
-        timer = setInterval(() => turn(dx, dy), 120);
+        timer = setInterval(() => turn(dx, dy, dz), 120);
       });
       ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => btn.addEventListener(ev, stop));
     });
