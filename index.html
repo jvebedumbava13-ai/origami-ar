@@ -168,6 +168,18 @@
     // shown after models.json loads, which would otherwise overwrite it with the step hint
     const showArMessage = () => { if (params.get('ar') && AR_MESSAGES[arStage]) hint(AR_MESSAGES[arStage]); };
 
+    // AR shows the finished model, not whichever fold step is on screen (step 1 is a flat square)
+    function showFinishedModel() {
+      if (!modelData) return;
+      try {
+        viewer.pause();
+        viewer.animationName = `Step_${String(modelData.steps).padStart(2, '0')}`;
+        viewer.currentTime = Math.max(0, viewer.duration - 0.001);
+      } catch (err) {
+        console.warn('Could not pose the finished model:', err);
+      }
+    }
+
     async function webxrSupported() {
       try {
         return !!(navigator.xr && await navigator.xr.isSessionSupported('immersive-ar'));
@@ -215,6 +227,7 @@
           logAR(`WebXR ${ok ? 'yes' : 'no'}`);
           if (ok) {
             viewer.setAttribute('ar-modes', 'webxr');
+            showFinishedModel();
             hint('Starting AR... point the camera at the floor and move the phone slowly.');
             viewer.activateAR();
             return;
