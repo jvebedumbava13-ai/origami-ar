@@ -1,0 +1,242 @@
+{
+  "01": {
+    "title": "01. Stealth Dart Fighter",
+    "difficulty": "Level 1: Easy",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "02": {
+    "title": "02. Baby Raptor Jaw",
+    "difficulty": "Level 1: Easy",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "03": {
+    "title": "03. Cyber Shuriken Disc",
+    "difficulty": "Level 1: Easy",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "04": {
+    "title": "04. Armored Hover-Tank",
+    "difficulty": "Level 1: Easy",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "05": {
+    "title": "05. Plasma Boomerang",
+    "difficulty": "Level 1: Easy",
+    "steps": 4,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction"
+    ]
+  },
+  "06": {
+    "title": "06. Valkyrie Supersonic Jet",
+    "difficulty": "Level 2: Medium",
+    "steps": 4,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction"
+    ]
+  },
+  "07": {
+    "title": "07. Pterodactyl Glider",
+    "difficulty": "Level 2: Medium",
+    "steps": 4,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction"
+    ]
+  },
+  "08": {
+    "title": "08. Orbital Space Shuttle",
+    "difficulty": "Level 2: Medium",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "09": {
+    "title": "09. B-2 Spirit Stealth Drone",
+    "difficulty": "Level 2: Medium",
+    "steps": 4,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction"
+    ]
+  },
+  "10": {
+    "title": "10. Fire-Wyvern Glider",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction",
+      "Step 6: fill in instruction"
+    ]
+  },
+  "11": {
+    "title": "11. Mega-Jump Cyber Frog",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "12": {
+    "title": "12. Flapping Phoenix",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction",
+      "Step 6: fill in instruction"
+    ]
+  },
+  "13": {
+    "title": "13. Snap-Jaw T-Rex",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "14": {
+    "title": "14. Spinning Galaxy Top",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "15": {
+    "title": "15. Mecha Claw Talon",
+    "difficulty": "Level 3: Action",
+    "steps": 4,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction"
+    ]
+  },
+  "16": {
+    "title": "16. Armored Triceratops",
+    "difficulty": "Level 4: Boss 3D",
+    "steps": 6,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction",
+      "Step 6: fill in instruction"
+    ]
+  },
+  "17": {
+    "title": "17. Star-Cruiser Dreadnought",
+    "difficulty": "Level 4: Boss 3D",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "18": {
+    "title": "18. Caucasian Golden Ram",
+    "difficulty": "Level 4: Boss 3D",
+    "steps": 6,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction",
+      "Step 6: fill in instruction"
+    ]
+  },
+  "19": {
+    "title": "19. Neon Mecha-Godzilla",
+    "difficulty": "Level 4: Boss 3D",
+    "steps": 5,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction"
+    ]
+  },
+  "20": {
+    "title": "20. Ancient Emperor Dragon",
+    "difficulty": "Level 4: Boss 3D",
+    "steps": 6,
+    "stepHints": [
+      "Step 1: fill in instruction",
+      "Step 2: fill in instruction",
+      "Step 3: fill in instruction",
+      "Step 4: fill in instruction",
+      "Step 5: fill in instruction",
+      "Step 6: fill in instruction"
+    ]
+  }
+}

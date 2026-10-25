@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backup Vault</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0b0f19; color: #fff; padding: 40px 16px; text-align: center; }
+    .card { background: #1e293b; padding: 30px; border-radius: 12px; max-width: 420px; margin: 0 auto; border: 1px solid #334155; }
+    input { width: 100%; padding: 10px; margin: 15px 0; background: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 6px; font-size: 16px; }
+    button, .btn { display: block; width: 100%; background: #10b981; color: #fff; border: none; padding: 12px 20px; font-weight: 700; border-radius: 6px; cursor: pointer; text-decoration: none; }
+    .muted { color: #94a3b8; font-size: 14px; margin-top: 10px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Printable Backup Vault</h2>
+    <p class="muted">Enter your email to get the spare printable sheets.</p>
+
+    <!-- Replace the action with your Formspree form URL (formspree.io) -->
+    <form id="vault-form" action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="email" name="email" placeholder="your.email@example.com" required>
+      <button type="submit">Unlock</button>
+    </form>
+
+    <div id="download-box" class="hidden">
+      <h3>Access granted</h3>
+      <p class="muted">Download the backup sheets below.</p>
+      <a class="btn" href="assets/pdf/all_20_backup_sheets.pdf" download>Download all 20 backup sheets</a>
+      <a class="btn" href="index.html" style="background:#475569; margin-top:10px;">Back to the 3D AR studio</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('vault-form');
+    const downloadBox = document.getElementById('download-box');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(() => {
+        form.style.display = 'none';
+        downloadBox.style.display = 'block';
+      }).catch(() => {
+        alert('Could not submit. Please try again.');
+      });
+    });
+  </script>
+</body>
+</html>
