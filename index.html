@@ -19,6 +19,7 @@
     .btn { background: #2563eb; color: #fff; border: none; padding: 12px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
     .btn:disabled { background: #334155; opacity: 0.5; cursor: default; }
     #step-counter { font-weight: 700; min-width: 80px; text-align: center; }
+    .ar-log { background: #422006; color: #fde68a; font-size: 13px; padding: 8px 16px; border-top: 1px solid #854d0e; }
     .phone-panel { position: fixed; inset: 0; background: rgba(11, 15, 25, 0.92); display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
     .phone-panel.open { display: flex; }
     .phone-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 340px; text-align: center; }
@@ -48,6 +49,7 @@
     </model-viewer>
 
     <div class="hint-box" id="step-hint"></div>
+    <div class="ar-log" id="ar-log" hidden></div>
 
     <div class="controls">
       <button class="btn" id="prev-btn">Back</button>
@@ -132,32 +134,81 @@
       || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);  // iPadOS reports a Mac
     const hint = (text) => { document.getElementById('step-hint').innerText = text; };
 
-    // Scene Viewer lives in the Google app; phones without it can still have it inside ARCore.
-    // Each failed try comes back here with ?ar=<next>, and the next tap uses the next app.
+    // Android tries, in order: WebXR inside the browser (needs only ARCore), then Google Scene
+    // Viewer through the Google app, then Scene Viewer inside ARCore. A Scene Viewer launch that
+    // fails reloads this page with ?ar=<next stage>; each tap of AR tries the current stage.
+    const AR_STAGES = ['webxr', 'google', 'core', 'none'];
     const AR_APPS = {
-      google: { pkg: 'com.google.android.googlequicksearchbox', mode: 'ar_preferred', next: 'core' },
-      core: { pkg: 'com.google.ar.core', mode: 'ar_only', next: 'none' },
+      google: { pkg: 'com.google.android.googlequicksearchbox', mode: 'ar_preferred' },
+      core: { pkg: 'com.google.ar.core', mode: 'ar_only' },
     };
-    const arState = params.get('ar');
+    let arStage = AR_STAGES.includes(params.get('ar')) ? params.get('ar') : 'webxr';
+    const nextStage = (s) => AR_STAGES[Math.min(AR_STAGES.indexOf(s) + 1, AR_STAGES.length - 1)];
+
+    // visible AR log: what was tried and what happened, kept across the fallback reloads
+    const arLog = document.getElementById('ar-log');
+    let arLines = [];
+    try {
+      // a fresh visit (no ?ar=) starts a fresh log
+      if (params.get('ar')) arLines = JSON.parse(sessionStorage.getItem('arLog') || '[]');
+      else sessionStorage.removeItem('arLog');
+    } catch (e) { /* storage off */ }
+    function logAR(line) {
+      arLines = arLines.concat(line).slice(-6);
+      try { sessionStorage.setItem('arLog', JSON.stringify(arLines)); } catch (e) { /* storage off */ }
+      arLog.innerText = 'AR: ' + arLines.join(' → ');
+      arLog.hidden = false;
+    }
+    if (params.get('ar')) logAR(`came back (stage ${arStage})`);
     const AR_MESSAGES = {
-      core: 'Tap AR again to open it with Google Play Services for AR.',
-      none: 'AR on Android needs the Google app and Google Play Services for AR. Install or update both from Google Play, then try again.',
+      google: 'Tap AR again to try the Google AR viewer.',
+      core: 'Tap AR again to try Google Play Services for AR.',
+      none: 'AR on Android needs Google Play Services for AR (and the Google app). Install or update them from Google Play, then try again.',
     };
     // shown after models.json loads, which would otherwise overwrite it with the step hint
-    const showArMessage = () => { if (AR_MESSAGES[arState]) hint(AR_MESSAGES[arState]); };
+    const showArMessage = () => { if (params.get('ar') && AR_MESSAGES[arStage]) hint(AR_MESSAGES[arStage]); };
 
-    document.getElementById('ar-btn').addEventListener('click', () => {
+    async function webxrSupported() {
+      try {
+        return !!(navigator.xr && await navigator.xr.isSessionSupported('immersive-ar'));
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function launchSceneViewer(stage) {
+      const app = AR_APPS[stage];
+      const glb = new URL(`assets/glb/ar/model_${modelId}.glb`, location.href).href;
+      const back = new URL(location.href);
+      back.searchParams.set('ar', nextStage(stage));
+      const title = modelData ? modelData.title : 'AR Origami';
+      logAR(`opening Scene Viewer (${stage === 'google' ? 'Google app' : 'ARCore'})`);
+      location.href = 'intent://arvr.google.com/scene-viewer/1.0'
+        + `?file=${encodeURIComponent(glb)}&mode=${app.mode}&title=${encodeURIComponent(title)}`
+        + `#Intent;scheme=https;package=${app.pkg};`
+        + 'action=android.intent.action.VIEW;'
+        + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
+    }
+
+    document.getElementById('ar-btn').addEventListener('click', async () => {
       if (isAndroid) {
-        const app = AR_APPS[arState === 'core' || arState === 'none' ? 'core' : 'google'];
-        const glb = new URL(`assets/glb/ar/model_${modelId}.glb`, location.href).href;
-        const back = new URL(location.href);
-        back.searchParams.set('ar', app.next);
-        const title = modelData ? modelData.title : 'AR Origami';
-        location.href = 'intent://arvr.google.com/scene-viewer/1.0'
-          + `?file=${encodeURIComponent(glb)}&mode=${app.mode}&title=${encodeURIComponent(title)}`
-          + `#Intent;scheme=https;package=${app.pkg};`
-          + 'action=android.intent.action.VIEW;'
-          + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
+        if (arStage === 'webxr') {
+          const ok = await webxrSupported();
+          logAR(`WebXR ${ok ? 'yes' : 'no'}`);
+          if (ok) {
+            viewer.setAttribute('ar-modes', 'webxr');
+            hint('Starting AR... point the camera at the floor and move the phone slowly.');
+            viewer.activateAR();
+            return;
+          }
+          arStage = 'google';
+        }
+        if (arStage === 'none') {
+          logAR('nothing left to try');
+          hint(AR_MESSAGES.none);
+          return;
+        }
+        launchSceneViewer(arStage);
       } else if (!isIOS) {
         openPhonePanel();  // a computer: AR needs a phone camera, whatever the browser
       } else if (viewer.canActivateAR) {
@@ -180,7 +231,15 @@
       () => document.getElementById('phone-panel').classList.remove('open'));
 
     viewer.addEventListener('ar-status', (e) => {
-      if (e.detail.status === 'failed') hint('AR could not start on this device. Try Chrome (Android) or Safari (iPhone).');
+      const status = e.detail.status;
+      if (isAndroid) logAR(`WebXR ${status}`);
+      if (status !== 'failed') return;
+      if (isAndroid) {
+        arStage = 'google';  // WebXR didn't start: the next tap uses Scene Viewer
+        hint(AR_MESSAGES.google);
+      } else {
+        hint('AR could not start on this device. On iPhone use Safari.');
+      }
     });
 
     document.getElementById('prev-btn').addEventListener('click', () => step(-1));
