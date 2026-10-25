@@ -36,7 +36,9 @@
     #ar-viewer[ar-status="session-started"], #ar-viewer[ar-status="object-placed"] {
       opacity: 1 !important; position: fixed !important; left: 0 !important; top: 0 !important;
       width: 100vw !important; height: 100vh !important; pointer-events: auto !important; }
-    .xr-ctls { display: none; position: absolute; left: 0; right: 0; bottom: 28px; justify-content: center; gap: 8px; }
+    /* a column on the right: Chrome's "To exit full screen" notice covers the bottom for the first seconds */
+    .xr-ctls { display: none; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+               flex-direction: column; gap: 8px; }
     #ar-viewer[ar-status="session-started"] .xr-ctls, #ar-viewer[ar-status="object-placed"] .xr-ctls { display: flex; }
     .xr-ctl { width: 54px; height: 54px; border: none; border-radius: 16px; background: rgba(15, 23, 42, 0.85); color: #fff;
               font-size: 22px; touch-action: none; user-select: none; -webkit-user-select: none; }
@@ -104,6 +106,8 @@
     <div class="xr-ctls" id="xr-ctls">
       <button class="xr-ctl" data-act="left" aria-label="Turn left">&#8634;</button>
       <button class="xr-ctl" data-act="right" aria-label="Turn right">&#8635;</button>
+      <button class="xr-ctl" data-act="up" aria-label="Tilt up">&#9650;</button>
+      <button class="xr-ctl" data-act="down" aria-label="Tilt down">&#9660;</button>
       <button class="xr-ctl" data-act="smaller" aria-label="Smaller">&minus;</button>
       <button class="xr-ctl" data-act="bigger" aria-label="Bigger">+</button>
       <button class="xr-ctl" data-act="reset" aria-label="Reset">&#10227;</button>
@@ -324,17 +328,21 @@
     // AR overlay buttons: turn the model around its vertical axis and resize it (hold to repeat)
     const AR_SCALE = 2.5;
     let arYaw = 0;
+    let arPitch = 0;
     let arSize = AR_SCALE;
     function applyArPose() {
-      arViewer.orientation = `0deg 0deg ${arYaw}deg`;
+      // model-viewer orientation is roll, pitch, yaw
+      arViewer.orientation = `0deg ${arPitch}deg ${arYaw}deg`;
       arViewer.scale = `${arSize} ${arSize} ${arSize}`;
     }
     const XR_ACTIONS = {
       left: () => { arYaw += 15; },
       right: () => { arYaw -= 15; },
+      up: () => { arPitch = Math.max(-90, arPitch - 15); },
+      down: () => { arPitch = Math.min(90, arPitch + 15); },
       bigger: () => { arSize = Math.min(AR_SCALE * 4, arSize * 1.15); },
       smaller: () => { arSize = Math.max(AR_SCALE / 4, arSize / 1.15); },
-      reset: () => { arYaw = 0; arSize = AR_SCALE; },
+      reset: () => { arYaw = 0; arPitch = 0; arSize = AR_SCALE; },
     };
     const xrCtls = document.getElementById('xr-ctls');
     // taps on the buttons must not also count as AR taps (placing or moving the model)
