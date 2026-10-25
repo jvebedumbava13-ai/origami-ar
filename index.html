@@ -102,19 +102,29 @@
     const isAndroid = /android/i.test(navigator.userAgent);
     const hint = (text) => { document.getElementById('step-hint').innerText = text; };
 
-    if (params.get('ar') === 'none') {
-      hint('AR needs the Google app with ARCore (Google Play Services for AR). Install or update them from Google Play, then try again.');
+    // Scene Viewer lives in the Google app; phones without it can still have it inside ARCore.
+    // Each failed try comes back here with ?ar=<next>, and the next tap uses the next app.
+    const AR_APPS = {
+      google: { pkg: 'com.google.android.googlequicksearchbox', mode: 'ar_preferred', next: 'core' },
+      core: { pkg: 'com.google.ar.core', mode: 'ar_only', next: 'none' },
+    };
+    const arState = params.get('ar');
+    if (arState === 'core') {
+      hint('Tap AR again to open it with Google Play Services for AR.');
+    } else if (arState === 'none') {
+      hint('AR needs Google Play Services for AR (ARCore). Install or update it from Google Play, then try again.');
     }
 
     document.getElementById('ar-btn').addEventListener('click', () => {
       if (isAndroid) {
+        const app = AR_APPS[arState === 'core' || arState === 'none' ? 'core' : 'google'];
         const glb = new URL(`assets/glb/ar/model_${modelId}.glb`, location.href).href;
         const back = new URL(location.href);
-        back.searchParams.set('ar', 'none');
+        back.searchParams.set('ar', app.next);
         const title = modelData ? modelData.title : 'AR Origami';
         location.href = 'intent://arvr.google.com/scene-viewer/1.0'
-          + `?file=${encodeURIComponent(glb)}&mode=ar_preferred&title=${encodeURIComponent(title)}`
-          + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox;'
+          + `?file=${encodeURIComponent(glb)}&mode=${app.mode}&title=${encodeURIComponent(title)}`
+          + `#Intent;scheme=https;package=${app.pkg};`
           + 'action=android.intent.action.VIEW;'
           + `S.browser_fallback_url=${encodeURIComponent(back.href)};end;`;
       } else if (viewer.canActivateAR) {
