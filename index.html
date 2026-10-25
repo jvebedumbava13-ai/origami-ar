@@ -61,7 +61,8 @@
         viewer.iosSrc = `assets/usdz/model_${modelId}.usdz`;
         updateUI();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         document.getElementById('step-hint').innerText = 'models.json could not be loaded.';
       });
 
@@ -76,10 +77,14 @@
       document.getElementById('step-hint').innerText = modelData.stepHints[currentStep - 1] || '';
       document.getElementById('prev-btn').disabled = currentStep === 1;
       document.getElementById('next-btn').disabled = currentStep === modelData.steps;
-      // animation clip per step: Step_01, Step_02, ...
-      viewer.animationName = `Step_${String(currentStep).padStart(2, '0')}`;
-      viewer.currentTime = 0;
-      viewer.play({ repetitions: 1 });
+      // animation clip per step: Step_01, Step_02, ... (no clip until the GLB exists)
+      try {
+        viewer.animationName = `Step_${String(currentStep).padStart(2, '0')}`;
+        viewer.currentTime = 0;
+        viewer.play({ repetitions: 1 });
+      } catch (err) {
+        console.warn('Animation not ready:', err);
+      }
     }
 
     document.getElementById('prev-btn').addEventListener('click', () => step(-1));
