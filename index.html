@@ -61,6 +61,13 @@
     <a href="vault.html" class="footer-link">Backup Vault</a>
   </main>
 
+  <!-- WebXR AR uses its own hidden viewer holding the static finished model (assets/glb/ar/):
+       posing the animated model on its last frame before AR did not stick -->
+  <model-viewer id="ar-viewer" loading="eager" ar ar-modes="webxr" aria-hidden="true"
+    style="position:absolute; left:-10px; top:0; width:1px; height:1px; opacity:0; pointer-events:none;">
+    <span slot="ar-button" hidden></span>
+  </model-viewer>
+
   <!-- AR needs a phone camera: on a computer the AR button shows this instead -->
   <div class="phone-panel" id="phone-panel">
     <div class="phone-card">
@@ -73,6 +80,7 @@
 
   <script>
     const viewer = document.getElementById('viewer');
+    const arViewer = document.getElementById('ar-viewer');
     const params = new URLSearchParams(window.location.search);
     const modelId = params.get('id') || '01';
     let modelData = null;
@@ -88,6 +96,7 @@
         document.getElementById('model-level').innerText = `${modelData.difficulty} (${modelData.steps} steps)`;
         viewer.src = `assets/glb/model_${modelId}.glb`;
         viewer.iosSrc = `assets/usdz/model_${modelId}.usdz`;
+        arViewer.src = `assets/glb/ar/model_${modelId}.glb`;
         updateUI();
         showArMessage();
       })
@@ -168,18 +177,6 @@
     // shown after models.json loads, which would otherwise overwrite it with the step hint
     const showArMessage = () => { if (params.get('ar') && AR_MESSAGES[arStage]) hint(AR_MESSAGES[arStage]); };
 
-    // AR shows the finished model, not whichever fold step is on screen (step 1 is a flat square)
-    function showFinishedModel() {
-      if (!modelData) return;
-      try {
-        viewer.pause();
-        viewer.animationName = `Step_${String(modelData.steps).padStart(2, '0')}`;
-        viewer.currentTime = Math.max(0, viewer.duration - 0.001);
-      } catch (err) {
-        console.warn('Could not pose the finished model:', err);
-      }
-    }
-
     async function webxrSupported() {
       try {
         return !!(navigator.xr && await navigator.xr.isSessionSupported('immersive-ar'));
@@ -226,10 +223,8 @@
           const ok = await webxrSupported();
           logAR(`WebXR ${ok ? 'yes' : 'no'}`);
           if (ok) {
-            viewer.setAttribute('ar-modes', 'webxr');
-            showFinishedModel();
             hint('Starting AR... point the camera at the floor and move the phone slowly.');
-            viewer.activateAR();
+            arViewer.activateAR();
             return;
           }
           arStage = 'google';
@@ -261,17 +256,25 @@
     document.getElementById('phone-close').addEventListener('click',
       () => document.getElementById('phone-panel').classList.remove('open'));
 
-    viewer.addEventListener('ar-status', (e) => {
+    // WebXR status comes from the AR viewer (Android) or the main viewer (iPhone Quick Look)
+    let webxrWorked = false;
+    function onArStatus(e) {
       const status = e.detail.status;
       if (isAndroid) logAR(`WebXR ${status}`);
+      if (status === 'session-started') webxrWorked = true;
       if (status !== 'failed') return;
-      if (isAndroid) {
-        arStage = 'google';  // WebXR didn't start: the next tap uses Scene Viewer
-        hint(AR_MESSAGES.google);
-      } else {
+      if (!isAndroid) {
         hint('AR could not start on this device. On iPhone use Safari.');
+      } else if (webxrWorked) {
+        // WebXR ran before on this page (a failure after leaving AR); keep using it
+        hint('Tap AR to start again.');
+      } else {
+        arStage = 'google';  // WebXR never started: the next tap uses Scene Viewer
+        hint(AR_MESSAGES.google);
       }
-    });
+    }
+    viewer.addEventListener('ar-status', onArStatus);
+    arViewer.addEventListener('ar-status', onArStatus);
 
     document.getElementById('prev-btn').addEventListener('click', () => step(-1));
     document.getElementById('next-btn').addEventListener('click', () => step(1));
