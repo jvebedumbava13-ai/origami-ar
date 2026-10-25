@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR test</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0b0f19; color: #f8fafc; margin: 0; padding: 16px; line-height: 1.5; }
+    h1 { font-size: 18px; color: #38bdf8; }
+    button { display: block; width: 100%; margin: 10px 0; padding: 14px; border: none; border-radius: 10px;
+             font-size: 16px; font-weight: 700; color: #fff; background: #2563eb; }
+    .info { background: #422006; color: #fde68a; padding: 10px; border-radius: 8px; font-size: 13px; word-break: break-word; }
+    model-viewer { width: 100%; height: 220px; background: #1e293b; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <!-- Diagnoses AR on a phone: tap each button and report which ones open AR. -->
+  <h1>AR test</h1>
+  <div class="info" id="info">Checking...</div>
+
+  <button id="t1">1. Google's sample model (Scene Viewer)</button>
+  <button id="t2">2. Our fox, new file with paper thickness (Scene Viewer)</button>
+  <button id="t3">3. Our fox, old flat file (Scene Viewer)</button>
+  <button id="t4">4. Our fox in the browser (WebXR)</button>
+
+  <model-viewer id="mv" src="assets/glb/ar/model_06.glb" ar ar-modes="webxr" camera-controls>
+    <span slot="ar-button" hidden></span>
+  </model-viewer>
+
+  <script>
+    const info = document.getElementById('info');
+    const lines = [];
+    const log = (t) => { lines.push(t); info.innerText = lines.join('\n'); };
+    log('Browser: ' + navigator.userAgent);
+
+    (async () => {
+      let xr = 'no navigator.xr';
+      try { if (navigator.xr) xr = (await navigator.xr.isSessionSupported('immersive-ar')) ? 'yes' : 'no'; }
+      catch (e) { xr = 'error ' + e; }
+      log('WebXR AR supported: ' + xr);
+    })();
+
+    function sceneViewer(url) {
+      const back = location.href.split('#')[0];
+      log('Opening Scene Viewer: ' + url.split('/').pop());
+      location.href = 'intent://arvr.google.com/scene-viewer/1.0'
+        + `?file=${encodeURIComponent(url)}&mode=ar_preferred`
+        + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox;'
+        + 'action=android.intent.action.VIEW;'
+        + `S.browser_fallback_url=${encodeURIComponent(back)};end;`;
+    }
+    const here = (p) => new URL(p, location.href).href;
+    document.getElementById('t1').onclick = () => sceneViewer('https://modelviewer.dev/shared-assets/models/Astronaut.glb');
+    document.getElementById('t2').onclick = () => sceneViewer(here('assets/glb/ar/model_06.glb'));
+    document.getElementById('t3').onclick = () => sceneViewer(here('assets/glb/ar_flat/model_06.glb'));
+
+    const mv = document.getElementById('mv');
+    mv.addEventListener('ar-status', (e) => log('WebXR status: ' + e.detail.status));
+    document.getElementById('t4').onclick = () => {
+      log('WebXR: canActivateAR = ' + mv.canActivateAR);
+      if (mv.canActivateAR) mv.activateAR();
+    };
+  </script>
+</body>
+</html>
