@@ -32,6 +32,15 @@
     .btn:disabled { background: #334155; opacity: 0.5; cursor: default; }
     #step-counter { font-weight: 700; min-width: 80px; text-align: center; }
     .ar-log { background: #422006; color: #fde68a; font-size: 13px; padding: 8px 16px; border-top: 1px solid #854d0e; }
+    /* the AR viewer is invisible until an AR session; then its overlay buttons must show */
+    #ar-viewer[ar-status="session-started"], #ar-viewer[ar-status="object-placed"] {
+      opacity: 1 !important; position: fixed !important; left: 0 !important; top: 0 !important;
+      width: 100vw !important; height: 100vh !important; pointer-events: auto !important; }
+    .xr-ctls { display: none; position: absolute; left: 0; right: 0; bottom: 28px; justify-content: center; gap: 8px; }
+    #ar-viewer[ar-status="session-started"] .xr-ctls, #ar-viewer[ar-status="object-placed"] .xr-ctls { display: flex; }
+    .xr-ctl { width: 54px; height: 54px; border: none; border-radius: 16px; background: rgba(15, 23, 42, 0.85); color: #fff;
+              font-size: 22px; touch-action: none; user-select: none; -webkit-user-select: none; }
+    .xr-ctl:active { background: #2563eb; }
     .phone-panel { position: fixed; inset: 0; background: rgba(11, 15, 25, 0.92); display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
     .phone-panel.open { display: flex; }
     .phone-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; max-width: 340px; text-align: center; }
@@ -91,6 +100,14 @@
   <model-viewer id="ar-viewer" loading="eager" ar ar-modes="webxr" ar-scale="auto" scale="2.5 2.5 2.5" aria-hidden="true"
     style="position:absolute; left:-10px; top:0; width:1px; height:1px; opacity:0; pointer-events:none;">
     <span slot="ar-button" hidden></span>
+    <!-- shown on top of the camera during WebXR AR (Chrome's DOM overlay): turn and size -->
+    <div class="xr-ctls" id="xr-ctls">
+      <button class="xr-ctl" data-act="left" aria-label="Turn left">&#8634;</button>
+      <button class="xr-ctl" data-act="right" aria-label="Turn right">&#8635;</button>
+      <button class="xr-ctl" data-act="smaller" aria-label="Smaller">&minus;</button>
+      <button class="xr-ctl" data-act="bigger" aria-label="Bigger">+</button>
+      <button class="xr-ctl" data-act="reset" aria-label="Reset">&#10227;</button>
+    </div>
   </model-viewer>
 
   <!-- AR needs a phone camera: on a computer the AR button shows this instead -->
@@ -303,6 +320,37 @@
     }
     viewer.addEventListener('ar-status', onArStatus);
     arViewer.addEventListener('ar-status', onArStatus);
+
+    // AR overlay buttons: turn the model around its vertical axis and resize it (hold to repeat)
+    const AR_SCALE = 2.5;
+    let arYaw = 0;
+    let arSize = AR_SCALE;
+    function applyArPose() {
+      arViewer.orientation = `0deg 0deg ${arYaw}deg`;
+      arViewer.scale = `${arSize} ${arSize} ${arSize}`;
+    }
+    const XR_ACTIONS = {
+      left: () => { arYaw += 15; },
+      right: () => { arYaw -= 15; },
+      bigger: () => { arSize = Math.min(AR_SCALE * 4, arSize * 1.15); },
+      smaller: () => { arSize = Math.max(AR_SCALE / 4, arSize / 1.15); },
+      reset: () => { arYaw = 0; arSize = AR_SCALE; },
+    };
+    const xrCtls = document.getElementById('xr-ctls');
+    // taps on the buttons must not also count as AR taps (placing or moving the model)
+    xrCtls.addEventListener('beforexrselect', (e) => e.preventDefault());
+    xrCtls.querySelectorAll('.xr-ctl').forEach((btn) => {
+      const act = () => { XR_ACTIONS[btn.dataset.act](); applyArPose(); };
+      let timer = null;
+      const stop = () => { clearInterval(timer); timer = null; };
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        act();
+        stop();
+        if (btn.dataset.act !== 'reset') timer = setInterval(act, 120);
+      });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => btn.addEventListener(ev, stop));
+    });
 
     // arrow pad: each tick turns the camera 15 degrees; holding a button keeps turning
     const START_ORBIT = viewer.getAttribute('camera-orbit');

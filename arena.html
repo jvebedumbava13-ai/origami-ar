@@ -12,22 +12,14 @@
     const ZONES = { carrier: '01', dragon: '05' };
     const MODEL_ID = params.get('id') || ZONES[params.get('zone')] || '18';
 
-    // The GLB holds every fold step as a morph target; show the finished model (the last one).
-    AFRAME.registerComponent('finished-shape', {
-      init() {
-        this.el.addEventListener('model-loaded', () => {
-          this.el.getObject3D('mesh').traverse((node) => {
-            if (node.morphTargetInfluences && node.morphTargetInfluences.length) {
-              node.morphTargetInfluences.fill(0);
-              node.morphTargetInfluences[node.morphTargetInfluences.length - 1] = 1;
-            }
-          });
-        });
-      }
-    });
   </script>
   <style>
-    .hint { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; font-family: system-ui, sans-serif;
+    .ctls { position: fixed; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 6px;
+            flex-wrap: wrap; z-index: 12; padding: 0 8px; }
+    .ctl { width: 46px; height: 46px; border: none; border-radius: 14px; background: rgba(15, 23, 42, 0.85); color: #fff;
+           font-size: 20px; touch-action: none; user-select: none; -webkit-user-select: none; }
+    .ctl:active { background: #2563eb; }
+    .hint { position: fixed; left: 0; right: 0; bottom: 72px; text-align: center; font-family: system-ui, sans-serif;
             color: #fff; text-shadow: 0 1px 3px #000; font-size: 15px; z-index: 10; padding: 0 16px; }
     .back { position: fixed; top: 12px; left: 12px; z-index: 10; background: rgba(15, 23, 42, 0.8); color: #fff;
             padding: 8px 14px; border-radius: 18px; font-family: system-ui, sans-serif; text-decoration: none; font-weight: 600; }
@@ -37,6 +29,16 @@
 </head>
 <body style="margin:0; overflow:hidden;">
   <div class="hint" id="hint">Point your camera at the AR arena page or the back cover.</div>
+  <!-- model controls: turn left/right, tilt up/down, size, reset -->
+  <div class="ctls">
+    <button class="ctl" data-act="left" aria-label="Turn left">&#8634;</button>
+    <button class="ctl" data-act="right" aria-label="Turn right">&#8635;</button>
+    <button class="ctl" data-act="up" aria-label="Tilt up">&#9650;</button>
+    <button class="ctl" data-act="down" aria-label="Tilt down">&#9660;</button>
+    <button class="ctl" data-act="smaller" aria-label="Smaller">&minus;</button>
+    <button class="ctl" data-act="bigger" aria-label="Bigger">+</button>
+    <button class="ctl" data-act="reset" aria-label="Reset">&#10227;</button>
+  </div>
   <a class="back" id="back" href="index.html">&larr; Back</a>
   <!-- Messenger / Facebook in-app browsers often block the camera: offer Chrome -->
   <button class="chrome" id="chrome-btn" hidden>Open in Chrome for AR</button>
@@ -47,15 +49,48 @@
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      <!-- the target is 1 unit wide and a sheet is 0.2 m, so scale 3 makes the model about 60% of the target;
-           rotate so the model stands up out of the page -->
-      <a-entity id="hologram" finished-shape position="0 0 0.05" scale="3 3 3" rotation="90 0 0"></a-entity>
+      <!-- #spin turns around the page's normal and holds the size; #hologram stands the model up
+           out of the page (and tilts). The target is 1 unit wide, a sheet 0.2 m: scale 3 = ~60%. -->
+      <a-entity id="spin" position="0 0 0.05" scale="3 3 3">
+        <a-entity id="hologram" rotation="90 0 0"></a-entity>
+      </a-entity>
     </a-entity>
   </a-scene>
 
   <script>
-    document.getElementById('hologram').setAttribute('gltf-model', `assets/glb/model_${MODEL_ID}.glb`);
+    // the static finished model (with paper thickness) made for AR
+    document.getElementById('hologram').setAttribute('gltf-model', `assets/glb/ar/model_${MODEL_ID}.glb`);
     document.getElementById('back').href = `index.html?id=${MODEL_ID}`;
+
+    // control buttons: turn, tilt, size (hold to repeat), reset
+    const spin = document.getElementById('spin');
+    const holo = document.getElementById('hologram');
+    const STEP = Math.PI / 12;
+    const ACTIONS = {
+      left: () => { spin.object3D.rotation.z += STEP; },
+      right: () => { spin.object3D.rotation.z -= STEP; },
+      up: () => { holo.object3D.rotation.x = Math.min(Math.PI, holo.object3D.rotation.x + STEP); },
+      down: () => { holo.object3D.rotation.x = Math.max(0, holo.object3D.rotation.x - STEP); },
+      bigger: () => { spin.object3D.scale.multiplyScalar(1.15); },
+      smaller: () => { spin.object3D.scale.multiplyScalar(1 / 1.15); },
+      reset: () => {
+        spin.object3D.rotation.set(0, 0, 0);
+        spin.object3D.scale.set(3, 3, 3);
+        holo.object3D.rotation.set(Math.PI / 2, 0, 0);
+      },
+    };
+    document.querySelectorAll('.ctl[data-act]').forEach((btn) => {
+      const act = ACTIONS[btn.dataset.act];
+      let timer = null;
+      const stop = () => { clearInterval(timer); timer = null; };
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        act();
+        stop();
+        if (btn.dataset.act !== 'reset') timer = setInterval(act, 120);
+      });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => btn.addEventListener(ev, stop));
+    });
 
     if (/android/i.test(navigator.userAgent) && /; wv\)|FB_IAB|FBAN|FBAV|Instagram|Line\//.test(navigator.userAgent)) {
       const btn = document.getElementById('chrome-btn');
