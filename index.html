@@ -42,7 +42,7 @@
       width: 100vw !important; height: 100vh !important; pointer-events: auto !important; }
     /* room AR pad: bigger, on the right edge (Chrome's "To exit full screen" notice covers the bottom
        for the first seconds), shown only during an AR session */
-    .pad.xr { --k: 56px; display: none; top: 50%; transform: translateY(-50%); }
+    .pad.xr { --k: 56px; display: none; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); }
     #ar-viewer[ar-status="session-started"] .pad.xr, #ar-viewer[ar-status="object-placed"] .pad.xr { display: grid; }
     .phone-panel { position: fixed; inset: 0; background: rgba(11, 15, 25, 0.92); display: none; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
     .phone-panel.open { display: flex; }
