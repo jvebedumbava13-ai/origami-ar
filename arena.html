@@ -57,8 +57,8 @@
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      <!-- #spin turns around the page's normal and holds the size; #hologram stands the model up
-           out of the page (and tilts). The target is 1 unit wide, a sheet 0.2 m: scale 3 = ~60%. -->
+      <!-- #spin holds the size; #hologram stands the model up out of the page and takes the
+           turns (about the page's axes). The target is 1 unit wide, a sheet 0.2 m: scale 3 = ~60%. -->
       <a-entity id="spin" position="0 0 0.05" scale="3 3 3">
         <a-entity id="hologram" rotation="90 0 0"></a-entity>
       </a-entity>
@@ -74,17 +74,22 @@
     const spin = document.getElementById('spin');
     const holo = document.getElementById('hologram');
     const STEP = Math.PI / 12;
+    // every turn is applied on the outside about a fixed page axis: x across the page for
+    // up/down, the page's normal (z) for left/right. Tilting about the model's own x after a
+    // turn tipped it sideways.
+    const PAGE_X = new THREE.Vector3(1, 0, 0);
+    const PAGE_Z = new THREE.Vector3(0, 0, 1);
+    const turn = (axis, a) => holo.object3D.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(axis, a));
     const ACTIONS = {
-      left: () => { spin.object3D.rotation.z += STEP; },
-      right: () => { spin.object3D.rotation.z -= STEP; },
-      up: () => { holo.object3D.rotation.x = Math.min(Math.PI, holo.object3D.rotation.x + STEP); },
-      down: () => { holo.object3D.rotation.x = Math.max(0, holo.object3D.rotation.x - STEP); },
+      left: () => turn(PAGE_Z, STEP),
+      right: () => turn(PAGE_Z, -STEP),
+      up: () => turn(PAGE_X, STEP),
+      down: () => turn(PAGE_X, -STEP),
       bigger: () => { spin.object3D.scale.multiplyScalar(1.15); },
       smaller: () => { spin.object3D.scale.multiplyScalar(1 / 1.15); },
       reset: () => {
-        spin.object3D.rotation.set(0, 0, 0);
         spin.object3D.scale.set(3, 3, 3);
-        holo.object3D.rotation.set(Math.PI / 2, 0, 0);
+        holo.object3D.quaternion.setFromAxisAngle(PAGE_X, Math.PI / 2);  // stood up out of the page
       },
     };
     document.querySelectorAll('.ctl[data-act]').forEach((btn) => {

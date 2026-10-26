@@ -355,23 +355,43 @@
     arViewer.addEventListener('ar-status', onArStatus);
 
     // AR overlay buttons: turn the model around its vertical axis and resize it (hold to repeat)
+    // turns are kept as a rotation matrix and each new turn is applied on the outside, about a
+    // fixed axis: a yaw/pitch pair tilted about the model's own (already turned) axis instead
+    const IDENTITY = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    const mul = (A, B) => A.map((r) => B[0].map((_, j) => r.reduce((s, v, k) => s + v * B[k][j], 0)));
+    function axisRotation([x, y, z], a) {
+      const c = Math.cos(a), s = Math.sin(a), t = 1 - c;
+      return [[t * x * x + c, t * x * y - s * z, t * x * z + s * y],
+              [t * x * y + s * z, t * y * y + c, t * y * z - s * x],
+              [t * x * z - s * y, t * y * z + s * x, t * z * z + c]];
+    }
+    function orientationOf(m) {
+      // model-viewer's orientation is roll pitch yaw, applied as Ry(yaw) Rx(pitch) Rz(roll)
+      const pitch = Math.asin(Math.max(-1, Math.min(1, -m[1][2])));
+      const yaw = Math.atan2(m[0][2], m[2][2]);
+      const roll = Math.atan2(m[1][0], m[1][1]);
+      return `${roll}rad ${pitch}rad ${yaw}rad`;
+    }
+
+    // AR overlay buttons. model-viewer places the model facing the viewer, so up/down turn it
+    // about the horizontal axis across the screen (x) and left/right about the vertical (y)
     const AR_SCALE = 2.5;
-    let arYaw = 0;
-    let arPitch = 0;
+    const AR_STEP = Math.PI / 12;
+    let arTurn = IDENTITY;
     let arSize = AR_SCALE;
     function applyArPose() {
-      // model-viewer orientation is roll, pitch, yaw
-      arViewer.orientation = `0deg ${arPitch}deg ${arYaw}deg`;
+      arViewer.orientation = orientationOf(arTurn);
       arViewer.scale = `${arSize} ${arSize} ${arSize}`;
     }
+    const arRotate = (axis, a) => { arTurn = mul(axisRotation(axis, a), arTurn); };
     const XR_ACTIONS = {
-      left: () => { arYaw += 15; },
-      right: () => { arYaw -= 15; },
-      up: () => { arPitch = Math.max(-90, arPitch - 15); },
-      down: () => { arPitch = Math.min(90, arPitch + 15); },
+      left: () => arRotate([0, 1, 0], AR_STEP),
+      right: () => arRotate([0, 1, 0], -AR_STEP),
+      up: () => arRotate([1, 0, 0], -AR_STEP),
+      down: () => arRotate([1, 0, 0], AR_STEP),
       bigger: () => { arSize = Math.min(AR_SCALE * 4, arSize * 1.15); },
       smaller: () => { arSize = Math.max(AR_SCALE / 4, arSize / 1.15); },
-      reset: () => { arYaw = 0; arPitch = 0; arSize = AR_SCALE; },
+      reset: () => { arTurn = IDENTITY; arSize = AR_SCALE; },
     };
     const xrCtls = document.getElementById('xr-ctls');
     // taps on the buttons must not also count as AR taps (placing or moving the model)
@@ -396,21 +416,9 @@
     let goal = null;
     // up/down tilt the model itself about the screen's horizontal axis: moving the camera
     // over the top (phi) stopped at the pole and swung the model sideways
-    let tilt = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
-    const mul = (A, B) => A.map((r) => B[0].map((_, j) => r.reduce((s, v, k) => s + v * B[k][j], 0)));
-    function axisRotation([x, y, z], a) {
-      const c = Math.cos(a), s = Math.sin(a), t = 1 - c;
-      return [[t * x * x + c, t * x * y - s * z, t * x * z + s * y],
-              [t * x * y + s * z, t * y * y + c, t * y * z - s * x],
-              [t * x * z - s * y, t * y * z + s * x, t * z * z + c]];
-    }
+    let tilt = IDENTITY;
     function applyTilt() {
-      // model-viewer's orientation is roll pitch yaw, applied as Ry(yaw) Rx(pitch) Rz(roll)
-      const m = tilt;
-      const pitch = Math.asin(Math.max(-1, Math.min(1, -m[1][2])));
-      const yaw = Math.atan2(m[0][2], m[2][2]);
-      const roll = Math.atan2(m[1][0], m[1][1]);
-      viewer.orientation = `${roll}rad ${pitch}rad ${yaw}rad`;
+      viewer.orientation = orientationOf(tilt);
     }
     function turn(dx, dy, dz = 0) {
       if (!goal) {
@@ -446,7 +454,7 @@
     });
     document.getElementById('pad-reset').addEventListener('click', () => {
       goal = null;
-      tilt = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+      tilt = IDENTITY;
       applyTilt();
       viewer.cameraOrbit = START_ORBIT;
       viewer.fieldOfView = '30deg';
