@@ -134,8 +134,8 @@
     const modelId = params.get('id') || '01';
     let modelData = null;
     let currentStep = 1;
-    // clips are 1 s per step; 0.25 plays each fold over about 4 s so a kid can follow it
-    viewer.timeScale = 0.25;
+    // clips are 1 s per step; 0.18 plays each fold over about 5.5 s so the eye can follow it
+    viewer.timeScale = 0.18;
 
     fetch('models.json')
       .then(res => res.json())
@@ -394,6 +394,24 @@
     // turn from the goal, not from the camera's current position: it glides toward the goal,
     // so stepping from where it is made held buttons slow and uneven
     let goal = null;
+    // up/down tilt the model itself about the screen's horizontal axis: moving the camera
+    // over the top (phi) stopped at the pole and swung the model sideways
+    let tilt = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    const mul = (A, B) => A.map((r) => B[0].map((_, j) => r.reduce((s, v, k) => s + v * B[k][j], 0)));
+    function axisRotation([x, y, z], a) {
+      const c = Math.cos(a), s = Math.sin(a), t = 1 - c;
+      return [[t * x * x + c, t * x * y - s * z, t * x * z + s * y],
+              [t * x * y + s * z, t * y * y + c, t * y * z - s * x],
+              [t * x * z - s * y, t * y * z + s * x, t * z * z + c]];
+    }
+    function applyTilt() {
+      // model-viewer's orientation is roll pitch yaw, applied as Ry(yaw) Rx(pitch) Rz(roll)
+      const m = tilt;
+      const pitch = Math.asin(Math.max(-1, Math.min(1, -m[1][2])));
+      const yaw = Math.atan2(m[0][2], m[2][2]);
+      const roll = Math.atan2(m[1][0], m[1][1]);
+      viewer.orientation = `${roll}rad ${pitch}rad ${yaw}rad`;
+    }
     function turn(dx, dy, dz = 0) {
       if (!goal) {
         const o = viewer.getCameraOrbit();
@@ -401,7 +419,11 @@
       }
       const step = Math.PI / 12;
       goal.theta += dx * step;
-      goal.phi = Math.min(Math.PI - 0.15, Math.max(0.15, goal.phi + dy * step));
+      if (dy) {
+        const right = [Math.cos(goal.theta), 0, -Math.sin(goal.theta)];  // the camera's right
+        tilt = mul(axisRotation(right, dy * step), tilt);
+        applyTilt();
+      }
       // + / - move the camera closer or farther, within the viewer's min/max orbit (0.25-1.5 m)
       goal.radius = Math.min(1.5, Math.max(0.25, goal.radius * Math.pow(1.15, dz)));
       viewer.cameraOrbit = `${goal.theta}rad ${goal.phi}rad ${goal.radius}m`;
@@ -424,6 +446,8 @@
     });
     document.getElementById('pad-reset').addEventListener('click', () => {
       goal = null;
+      tilt = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+      applyTilt();
       viewer.cameraOrbit = START_ORBIT;
       viewer.fieldOfView = '30deg';
     });
