@@ -7,7 +7,7 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <script>
-    // Which hologram to show: ?id=01..52, or the book's diorama pages (?zone=carrier|dragon).
+    // Which hologram to show: ?id=01..96, or the book's diorama pages (?zone=carrier|dragon).
     const params = new URLSearchParams(window.location.search);
     const ZONES = { carrier: '01', dragon: '05' };
     const MODEL_ID = params.get('id') || ZONES[params.get('zone')] || '18';

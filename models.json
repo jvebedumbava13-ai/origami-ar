@@ -654,5 +654,575 @@
       "Fold each wing down along the wing line, one to the front and one to the back.",
       "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
     ]
+  },
+  "53": {
+    "title": "53. Aero Lancer",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the sharp tip behind the plane so the nose is round and safe.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "54": {
+    "title": "54. Polar Tern",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the sharp tip behind the plane so the nose is round and safe.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "55": {
+    "title": "55. Blunt Comet",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the sharp tip behind the plane so the nose is round and safe.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "56": {
+    "title": "56. Moth Glider",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the sharp tip behind the plane so the nose is round and safe.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the back edge of each wing down a little (landing flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "57": {
+    "title": "57. Drill Dart",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the sharp tip behind the plane so the nose is round and safe.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend one wing's back corner up and the other one's down (stunt flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "58": {
+    "title": "58. Diamond Dart",
+    "difficulty": "Level 1: Easy",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner (a double-layer triangle).",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "59": {
+    "title": "59. Diamond Fin",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner (a double-layer triangle).",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "60": {
+    "title": "60. Crystal Hawk",
+    "difficulty": "Level 2: Medium",
+    "steps": 7,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner (a double-layer triangle).",
+      "Fold the slanted edges to the center line.",
+      "Fold the top point down to blunt the nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing down a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "61": {
+    "title": "61. Gem Raider",
+    "difficulty": "Level 2: Medium",
+    "steps": 7,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner (a double-layer triangle).",
+      "Fold the slanted edges to the center line.",
+      "Fold the top point down to blunt the nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips down along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "62": {
+    "title": "62. Prism Ray",
+    "difficulty": "Level 1: Easy",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the bottom corner up to the top corner (a double-layer triangle).",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings and tilt them up into a V. Ready to fly!"
+    ]
+  },
+  "63": {
+    "title": "63. Long Needle",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the slanted edges to the center line once more for a long needle.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "64": {
+    "title": "64. Needle Hook",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the slanted edges to the center line once more for a long needle.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips down along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "65": {
+    "title": "65. Spear Gull",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the slanted edges to the center line once more for a long needle.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "66": {
+    "title": "66. Hood Dart",
+    "difficulty": "Level 1: Easy",
+    "steps": 6,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "67": {
+    "title": "67. Hood Interceptor",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "68": {
+    "title": "68. Hood Stunt",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend one wing's back corner up and the other one's down (stunt flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "69": {
+    "title": "69. Hood Hawk",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "70": {
+    "title": "70. Hood Lander",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the back edge of each wing down a little (landing flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "71": {
+    "title": "71. Stub Delta",
+    "difficulty": "Level 1: Easy",
+    "steps": 5,
+    "stepHints": [
+      "Fold the sheet in half: top edge down to the bottom edge.",
+      "Fold the two top corners down to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "72": {
+    "title": "72. Arrowhead",
+    "difficulty": "Level 2: Medium",
+    "steps": 5,
+    "stepHints": [
+      "Fold the sheet in half: top edge down to the bottom edge.",
+      "Fold the two top corners down to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "73": {
+    "title": "73. Mini Manta",
+    "difficulty": "Level 2: Medium",
+    "steps": 5,
+    "stepHints": [
+      "Fold the sheet in half: top edge down to the bottom edge.",
+      "Fold the two top corners down to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing down a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "74": {
+    "title": "74. Pocket Stunt",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Fold the sheet in half: top edge down to the bottom edge.",
+      "Fold the two top corners down to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend one wing's back corner up and the other one's down (stunt flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "75": {
+    "title": "75. Sky Blanket",
+    "difficulty": "Level 1: Easy",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner (a big triangle).",
+      "Fold the long top edge down a little.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "76": {
+    "title": "76. Night Wing",
+    "difficulty": "Level 2: Medium",
+    "steps": 7,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner (a big triangle).",
+      "Fold the long top edge down a little.",
+      "Roll it down again for a heavy leading edge.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "77": {
+    "title": "77. Shadow Ray",
+    "difficulty": "Level 3: Action",
+    "steps": 7,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner (a big triangle).",
+      "Fold the long top edge down a little.",
+      "Roll it down again for a heavy leading edge.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "78": {
+    "title": "78. Albatross",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner (a big triangle).",
+      "Fold the long top edge down a little.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "79": {
+    "title": "79. Dusk Bat",
+    "difficulty": "Level 2: Medium",
+    "steps": 7,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the top corner down to the bottom corner (a big triangle).",
+      "Fold the long top edge down a little.",
+      "Roll it down again for a heavy leading edge.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips down along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "80": {
+    "title": "80. Brick Hauler",
+    "difficulty": "Level 1: Easy",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down into small triangles for a wide nose.",
+      "Fold the flat top edge down a little.",
+      "Roll it down again for a heavy, blunt nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "81": {
+    "title": "81. Cargo Master",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down into small triangles for a wide nose.",
+      "Fold the flat top edge down a little.",
+      "Roll it down again for a heavy, blunt nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Fold the wing tips up along the dotted lines to make winglets, then open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "82": {
+    "title": "82. Heavy Lander",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down into small triangles for a wide nose.",
+      "Fold the flat top edge down a little.",
+      "Roll it down again for a heavy, blunt nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the back edge of each wing down a little (landing flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "83": {
+    "title": "83. Forward Falcon",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "84": {
+    "title": "84. Reverse Arrow",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the slanted edges to the center line one more time for a needle nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Open the wings so they stand level. Ready to fly!"
+    ]
+  },
+  "85": {
+    "title": "85. Kite Gull",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "86": {
+    "title": "86. Kite Drifter",
+    "difficulty": "Level 2: Medium",
+    "steps": 6,
+    "stepHints": [
+      "Turn the square so a corner points up.",
+      "Fold the two upper edges to the center line (kite fold).",
+      "Fold the top point down to blunt the nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing down a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "87": {
+    "title": "87. Bulldog Lander",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down to the bottom of the flaps.",
+      "Fold the new top corners to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the back edge of each wing down a little (landing flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "88": {
+    "title": "88. Lock Hawk",
+    "difficulty": "Level 4: Boss",
+    "steps": 7,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down so it reaches past the middle.",
+      "Fold the top corners in so they meet at the center line just above the little point.",
+      "Fold the little point up over the corners to lock them.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "89": {
+    "title": "89. Pleat Gull",
+    "difficulty": "Level 4: Boss",
+    "steps": 7,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the top point down.",
+      "Fold the point back up to make a pleat (extra weight in the nose).",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "90": {
+    "title": "90. Hammer Drill",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Fold the top edge down.",
+      "Fold the new top corners to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend one wing's back corner up and the other one's down (stunt flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "91": {
+    "title": "91. Rolling Gull",
+    "difficulty": "Level 3: Action",
+    "steps": 5,
+    "stepHints": [
+      "Fold the top edge down a little.",
+      "Roll it down again.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "92": {
+    "title": "92. Edge Runner",
+    "difficulty": "Level 2: Medium",
+    "steps": 5,
+    "stepHints": [
+      "Fold the top edge down a little.",
+      "Fold the two top corners to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing down a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "93": {
+    "title": "93. Blunt Drill",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the top point down to make a blunt nose.",
+      "Fold the slanted edges to the center line.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend one wing's back corner up and the other one's down (stunt flaps), then open the wings. Ready to fly!"
+    ]
+  },
+  "94": {
+    "title": "94. Hornet Tips",
+    "difficulty": "Level 2: Medium",
+    "steps": 5,
+    "stepHints": [
+      "Fold the two top corners down into small triangles for a wide nose.",
+      "Fold the left and right edges in a little (narrow strips) to make the wings stiff.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer part of each wing up a little along the dotted line, then open the wings. Ready to fly!"
+    ]
+  },
+  "95": {
+    "title": "95. Arrow Gull",
+    "difficulty": "Level 3: Action",
+    "steps": 6,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the slanted edges to the center line one more time for a needle nose.",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the outer half of each wing down a little along the dotted line (gull wings), then open the wings into a V. Ready to fly!"
+    ]
+  },
+  "96": {
+    "title": "96. Pleat Lander",
+    "difficulty": "Level 4: Boss",
+    "steps": 7,
+    "stepHints": [
+      "Fold the two top corners down so the top edges meet the center line.",
+      "Fold the new slanted edges to the center line.",
+      "Fold the top point down.",
+      "Fold the point back up to make a pleat (extra weight in the nose).",
+      "Fold the plane in half backward along the center line.",
+      "Fold each wing down along the wing line, one to the front and one to the back.",
+      "Bend the back edge of each wing down a little (landing flaps), then open the wings. Ready to fly!"
+    ]
   }
 }
